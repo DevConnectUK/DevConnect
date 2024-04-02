@@ -2,13 +2,13 @@ import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/navigation/NavBar";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { useEffect, useState } from "react";
-import { User } from "./models/user";
+import { useEffect } from "react";
 import ProfilePage from "./pages/ProfilePage";
 import { getLoggedInUser } from "./api/user";
+import { useUserContext } from "./components/context/UserContext";
 
 function App() {
-    const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
+    const [, setLoggedInUser] = useUserContext();
 
     useEffect(() => {
         async function fetchLoggedInUser() {
@@ -20,27 +20,15 @@ function App() {
             }
         }
         fetchLoggedInUser();
-    }, []);
+    }, [setLoggedInUser]);
 
     return (
         <>
-            <NavBar
-                loggedIn={loggedInUser != null}
-                setLoggedInUser={setLoggedInUser}
-            />
+            <NavBar />
             <Routes>
-                <Route
-                    path="/login"
-                    element={<LoginPage setLoggedInUser={setLoggedInUser} />}
-                />
-                <Route
-                    path="/register"
-                    element={<RegisterPage setLoggedInUser={setLoggedInUser} />}
-                />
-                <Route
-                    path="/profile"
-                    element={<ProfilePage user={loggedInUser} />}
-                />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
             </Routes>
         </>
     );

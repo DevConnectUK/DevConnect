@@ -1,10 +1,8 @@
-import { User } from "../models/user";
+import { useUserContext } from "../components/context/UserContext";
 
-interface ProfilePageProps {
-    user: User | null;
-}
+export default function ProfilePage() {
+    const [user] = useUserContext();
 
-export default function ProfilePage({ user }: ProfilePageProps) {
     if (!user) {
         return <h1>User not logged in</h1>;
     }

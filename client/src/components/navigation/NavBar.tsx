@@ -1,12 +1,9 @@
 import { Link } from "react-router-dom";
 import { logoutUser } from "../../api/user";
-import { SetUserProps } from "../form/SetUserProps";
+import { useUserContext } from "../context/UserContext";
 
-interface NavBarProps extends SetUserProps {
-    loggedIn: boolean;
-}
-
-export default function NavBar({ loggedIn, setLoggedInUser }: NavBarProps) {
+export default function NavBar() {
+    const [user] = useUserContext();
     return (
         <nav className="p-4">
             <div className="container mx-auto flex justify-between">
@@ -16,8 +13,8 @@ export default function NavBar({ loggedIn, setLoggedInUser }: NavBarProps) {
                     </Link>
                 </div>
                 <div>
-                    {loggedIn ? (
-                        <LoggedInSection setLoggedInUser={setLoggedInUser} />
+                    {user != null ? (
+                        <LoggedInSection />
                     ) : (
                         <NotLoggedInSection />
                     )}
@@ -27,7 +24,9 @@ export default function NavBar({ loggedIn, setLoggedInUser }: NavBarProps) {
     );
 }
 
-function LoggedInSection({ setLoggedInUser }: SetUserProps) {
+function LoggedInSection() {
+    const [, setLoggedInUser] = useUserContext();
+
     async function handleLogout() {
         try {
             await logoutUser();

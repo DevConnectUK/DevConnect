@@ -1,16 +1,18 @@
 import { useForm } from "react-hook-form";
-import FormItem from "./customInput";
+import FormItem from "./FormItem";
 import { RegisterUserInput } from "../../models/user";
 import { registerUser } from "../../api/user";
-import { SetUserProps } from "./SetUserProps";
+import { useUserContext } from "../context/UserContext";
 
-export default function RegistrationForm({ setLoggedInUser }: SetUserProps) {
+export default function RegistrationForm() {
     const {
         register,
         handleSubmit,
         reset,
         formState: { errors, isSubmitting },
     } = useForm<RegisterUserInput>();
+
+    const [, setLoggedInUser] = useUserContext();
 
     async function onSubmit(formData: RegisterUserInput) {
         try {
