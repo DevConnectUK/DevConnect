@@ -1,12 +1,14 @@
 import { Route, Routes } from "react-router-dom";
-import NavBar from "./components/navigation/NavBar";
+import NavBar from "./components/layouts/NavBar";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 import PostPage from "./pages/PostPage";
 import { useEffect } from "react";
 import { getLoggedInUser } from "./api/user";
-import { useUserContext } from "./components/context/UserContext";
+import { useUserContext } from "./context/UserContext";
+import CreatePostPage from "./pages/CreatePostPage";
+import HomePage from "./pages/HomePage";
 
 function App() {
     const [, setLoggedInUser] = useUserContext();
@@ -24,15 +26,17 @@ function App() {
     }, [setLoggedInUser]);
 
     return (
-        <>
+        <div className="bg-background-50">
             <NavBar />
             <Routes>
+                <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/post/:id" element={<PostPage />} />
+                <Route path="/create-post" element={<CreatePostPage />} />
             </Routes>
-        </>
+        </div>
     );
 }
 

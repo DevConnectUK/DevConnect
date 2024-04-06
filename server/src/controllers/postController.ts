@@ -35,9 +35,7 @@ export const createPost: RequestHandler<
 };
 
 export const getUserPosts: RequestHandler = async (req, res, next) => {
-    console.log("_-------------------------------------------------------");
     const userId = req.params.userId;
-    console.log(userId);
     try {
         if (!userId) {
             throw createHttpError(401, "Unauthorized");

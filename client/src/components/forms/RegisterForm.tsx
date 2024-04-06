@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import FormItem from "./FormItem";
 import { RegisterUserInput } from "../../models/user";
 import { registerUser } from "../../api/user";
-import { useUserContext } from "../context/UserContext";
+import { useUserContext } from "../../context/UserContext";
 import { useState } from "react";
 
 export default function RegistrationForm() {

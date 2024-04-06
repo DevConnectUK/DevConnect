@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useUserContext } from "../components/context/UserContext";
-import PostForm from "../components/form/PostForm";
+import { useUserContext } from "../context/UserContext";
 import { Post } from "../models/post";
 import { getUserPosts } from "../api/post";
 import PostGrid from "../components/post/PostGrid";
+import { Link } from "react-router-dom";
+import { User } from "../models/user";
+import DarkModeToggle from "../components/ui/DarkModeToggle";
 
 export default function ProfilePage() {
     const [user] = useUserContext();
@@ -15,26 +17,46 @@ export default function ProfilePage() {
 
             try {
                 const userPosts = await getUserPosts(user._id);
-                console.log(userPosts);
                 setPosts(userPosts);
             } catch (error) {
                 console.error("Error fetching user posts:", error);
             }
         };
-
         fetchUserPosts();
     }, [user]);
 
     if (!user) {
-        return <h1>User not logged in</h1>;
+        return (
+            <div className="max-w-md mx-auto">
+                <h1>User not logged in</h1>
+            </div>
+        );
     }
 
     return (
-        <div className="max-w-md mx-auto">
-            <h1>Welcome, {user.username}</h1>
-            <p>Email: {user.email}</p>
-            <PostForm />
+        <div className="max-w-[1000px] mx-auto">
+            <UserProfileCard user={user} />
+            <DarkModeToggle />
+            <Link
+                to="/create-post"
+                className="block bg-accent text-white py-2 px-4 rounded  w-full text-center"
+            >
+                Create Post
+            </Link>
             <PostGrid posts={posts} />
+        </div>
+    );
+}
+
+interface UserProfileCardProps {
+    user: User;
+}
+
+function UserProfileCard({ user }: UserProfileCardProps) {
+    return (
+        <div>
+            <h1>{user.username}</h1>
+            <p>Email: {user.email}</p>
         </div>
     );
 }

@@ -1,16 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../api/user";
-import { useUserContext } from "../context/UserContext";
+import { useUserContext } from "../../context/UserContext";
 
 export default function NavBar() {
     const [user] = useUserContext();
     return (
         <nav className="p-4">
-            <div className="container mx-auto flex justify-between">
+            <div className="container mx-auto flex justify-between bg-background-50">
                 <div>
-                    <Link to="/" className="text-white">
-                        Home
-                    </Link>
+                    <Link to="/">Home</Link>
                 </div>
                 <div>
                     {user != null ? (
@@ -26,11 +24,13 @@ export default function NavBar() {
 
 function LoggedInSection() {
     const [, setLoggedInUser] = useUserContext();
+    const navigate = useNavigate();
 
     async function handleLogout() {
         try {
             await logoutUser();
             setLoggedInUser(null);
+            navigate("/");
         } catch (error) {
             console.error("Error logging out:", error);
         }
@@ -38,10 +38,8 @@ function LoggedInSection() {
 
     return (
         <>
-            <Link to="/profile" className="text-white">
-                Profile
-            </Link>
-            <button onClick={handleLogout} className="text-white ml-4">
+            <Link to="/profile">Profile</Link>
+            <button onClick={handleLogout} className=" ml-4">
                 Logout
             </button>
         </>
@@ -51,10 +49,8 @@ function LoggedInSection() {
 function NotLoggedInSection() {
     return (
         <>
-            <Link to="/login" className="text-white">
-                Login
-            </Link>
-            <Link to="/register" className="text-white ml-4">
+            <Link to="/login">Login</Link>
+            <Link to="/register" className=" ml-4">
                 Register
             </Link>
         </>

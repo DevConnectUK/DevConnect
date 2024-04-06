@@ -8,8 +8,12 @@ import createHttpError, { isHttpError } from "http-errors";
 import session from "express-session";
 import validateEnv from "./util/validateEnv";
 import MongoStore from "connect-mongo";
+import cors from "cors";
+import corsOptions from "./config/corsOptions";
 
 const app = express();
+
+app.use(cors(corsOptions));
 
 app.use(morgan("dev"));
 

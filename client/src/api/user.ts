@@ -26,7 +26,9 @@ export async function loginUser(user: LoginUserInput): Promise<User> {
 }
 
 export async function logoutUser(): Promise<void> {
-    await fetch("/api/users/logout", { method: "POST" });
+    return await handleRequest<void>("/api/users/logout", {
+        method: "POST",
+    });
 }
 
 export async function updateUser(
