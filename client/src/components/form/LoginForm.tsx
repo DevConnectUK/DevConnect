@@ -1,26 +1,33 @@
+// LoginForm.js
+
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { loginUser } from "../../api/user";
 import FormItem from "./FormItem";
 import { LoginUserInput } from "../../models/user";
 import { useUserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors, isSubmitting },
     } = useForm<LoginUserInput>();
 
     const [, setLoggedInUser] = useUserContext();
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     async function onSubmit(formData: LoginUserInput) {
+        setError("");
         try {
             const user = await loginUser(formData);
             setLoggedInUser(user);
-            reset();
-        } catch (error) {
-            console.error("Error logging in:", error);
+            navigate("/profile");
+        } catch (error: any) {
+            console.error(error.message);
+            setError(error.message);
         }
     }
 
@@ -30,7 +37,7 @@ export default function LoginForm() {
                 name="username"
                 label="Username"
                 register={register}
-                registerOptions={{ required: "Required" }}
+                registerOptions={{ required: "Username is required" }}
                 type="text"
                 error={errors.username}
             />
@@ -38,10 +45,11 @@ export default function LoginForm() {
                 name="password"
                 label="Password"
                 register={register}
-                registerOptions={{ required: "Required" }}
+                registerOptions={{ required: "Password is required" }}
                 type="password"
                 error={errors.password}
             />
+            {error && <p className="text-red-500">{error}</p>}{" "}
             <div className="py-3">
                 <button
                     type="submit"

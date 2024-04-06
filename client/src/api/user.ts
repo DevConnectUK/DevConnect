@@ -1,18 +1,16 @@
-import { User, RegisterUserInput } from "../models/user";
+import { User, RegisterUserInput, LoginUserInput } from "../models/user";
 
 async function handleRequest<T>(
     request: RequestInfo,
     init?: RequestInit
 ): Promise<T> {
-    try {
-        const response = await fetch(request, init);
-        if (!response.ok) {
-            throw new Error(`Request failed with status ${response.status}`);
-        }
-        return (await response.json()) as T;
-    } catch (error) {
-        throw new Error(`Request failed: ${(error as Error).message}`);
+    const response = await fetch(request, init);
+
+    if (!response.ok) {
+        const errorBody = await response.json();
+        throw new Error(errorBody.error);
     }
+    return (await response.json()) as T;
 }
 
 export async function getLoggedInUser(): Promise<User> {
@@ -29,12 +27,7 @@ export async function registerUser(user: RegisterUserInput): Promise<User> {
     });
 }
 
-interface LoginRequest {
-    username: string;
-    password: string;
-}
-
-export async function loginUser(user: LoginRequest): Promise<User> {
+export async function loginUser(user: LoginUserInput): Promise<User> {
     return await handleRequest<User>("/users/login", {
         method: "POST",
         headers: {

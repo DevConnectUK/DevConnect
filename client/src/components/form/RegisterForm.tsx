@@ -3,6 +3,7 @@ import FormItem from "./FormItem";
 import { RegisterUserInput } from "../../models/user";
 import { registerUser } from "../../api/user";
 import { useUserContext } from "../context/UserContext";
+import { useState } from "react";
 
 export default function RegistrationForm() {
     const {
@@ -13,14 +14,16 @@ export default function RegistrationForm() {
     } = useForm<RegisterUserInput>();
 
     const [, setLoggedInUser] = useUserContext();
+    const [error, setError] = useState("");
 
     async function onSubmit(formData: RegisterUserInput) {
         try {
             const user = await registerUser(formData);
             setLoggedInUser(user);
             reset();
-        } catch (error) {
-            console.error("Error creating user:", error);
+        } catch (error: any) {
+            console.error(error.message);
+            setError(error.message);
         }
     }
 
@@ -66,6 +69,7 @@ export default function RegistrationForm() {
                 type="password"
                 error={errors.password}
             />
+            {error && <p className="text-red-500">{error}</p>}{" "}
             <div className="py-3">
                 <button
                     type="submit"
