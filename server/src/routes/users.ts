@@ -1,5 +1,5 @@
-import * as userController from "../controllers/userController";
 import express from "express";
+import * as userController from "../controllers/userController";
 import { requiresAuth } from "../middleware/auth";
 
 const router = express.Router();
@@ -9,7 +9,7 @@ router
     .post("/register", userController.registerUser)
     .post("/login", userController.loginUser)
     .post("/logout", userController.logoutUser)
-    .put("/:id", userController.updateUser)
-    .delete("/:id", userController.deleteUser);
+    .put("/", requiresAuth, userController.updateUser)
+    .delete("/", requiresAuth, userController.deleteUser);
 
 export default router;

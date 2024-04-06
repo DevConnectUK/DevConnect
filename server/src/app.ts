@@ -1,6 +1,8 @@
 import "dotenv/config";
 import express, { Request, Response, NextFunction } from "express";
 import userRouter from "./routes/users";
+import postRouter from "./routes/posts";
+import commentRouter from "./routes/comments";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
 import session from "express-session";
@@ -28,7 +30,9 @@ app.use(
     })
 );
 
-app.use("/users", userRouter);
+app.use("/api/users", userRouter);
+app.use("/api/posts", postRouter);
+app.use("/api/comments", commentRouter);
 
 app.use((req, res, next) => {
     next(createHttpError(404, "Route not found"));
