@@ -17,17 +17,21 @@ export async function createPost(postData: CreatePostInput): Promise<Post> {
 }
 
 export async function getUserPosts(userId: string): Promise<Post[]> {
-    return await handleRequest<Post[]>("/api/posts/user", {
+    return await handleRequest<Post[]>(`/api/posts/user/${userId}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId }),
     });
 }
 
 export async function getPostById(postId: string): Promise<Post> {
-    return await handleRequest<Post>(`/api/posts/${postId}`);
+    return await handleRequest<Post>(`/api/posts/${postId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
 }
 
 export async function updatePost(

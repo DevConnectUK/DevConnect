@@ -1,6 +1,4 @@
-// LoginForm.js
-
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { loginUser } from "../../api/user";
 import FormItem from "./FormItem";

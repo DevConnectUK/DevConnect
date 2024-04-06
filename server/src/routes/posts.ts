@@ -6,8 +6,8 @@ const router = express.Router();
 
 router
     .post("/", requiresAuth, postController.createPost)
-    .post("/user", postController.getUserPosts)
-    .get("/:id", postController.getPostById)
+    .get("/user/:userId", postController.getUserPosts)
+    .get("/:postId", postController.getPostById)
     .put("/:id", postController.updatePost)
     .delete("/:id", postController.deletePost);
 

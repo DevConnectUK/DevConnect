@@ -35,22 +35,22 @@ export const createPost: RequestHandler<
 };
 
 export const getUserPosts: RequestHandler = async (req, res, next) => {
-    console.log(req.body);
-    const userId = req.body.userId;
+    console.log("_-------------------------------------------------------");
+    const userId = req.params.userId;
+    console.log(userId);
     try {
         if (!userId) {
             throw createHttpError(401, "Unauthorized");
         }
 
-        const posts = await Post.find({ author: userId });
+        const posts = await Post.find({ author: userId }).exec();
         res.json(posts);
     } catch (error) {
         next(error);
     }
 };
-
 export const getPostById: RequestHandler = async (req, res, next) => {
-    const postId = req.params.id;
+    const postId = req.params.postId;
 
     try {
         if (!mongoose.isValidObjectId(postId)) {
