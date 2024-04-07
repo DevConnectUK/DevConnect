@@ -34,7 +34,7 @@ export async function getPostById(postId: string): Promise<Post> {
     });
 }
 
-export async function updatePost(
+export async function updatePostById(
     postId: string,
     postData: Partial<CreatePostInput>
 ): Promise<Post> {

@@ -22,7 +22,8 @@ export default function UserPostsPage() {
         fetchUserPosts();
     }, [user]);
     return (
-        <div>
+        <div className="max-w-[1000px] mx-auto">
+            <h1 className="text-3xl mb-2">My Posts</h1>
             <PostGrid posts={posts} />
         </div>
     );

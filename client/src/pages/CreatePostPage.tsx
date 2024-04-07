@@ -2,8 +2,8 @@ import CreatePostForm from "../components/form/CreatePostForm";
 
 export default function CreatePostPage() {
     return (
-        <div>
-            <h2>Create Post</h2>
+        <div className="max-w-[1000px] mx-auto">
+            <h1 className="text-3xl mb-2">Create Post</h1>
             <CreatePostForm />
         </div>
     );

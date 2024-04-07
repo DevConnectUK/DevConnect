@@ -47,6 +47,7 @@ export const getUserPosts: RequestHandler = async (req, res, next) => {
         next(error);
     }
 };
+
 export const getPostById: RequestHandler = async (req, res, next) => {
     const postId = req.params.postId;
 

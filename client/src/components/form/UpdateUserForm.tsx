@@ -5,11 +5,11 @@ import { updateUser } from "../../api/user";
 import { useUserContext } from "../context/UserContext";
 import { useEffect, useState } from "react";
 
-interface UserProfileFormProps {
+interface UpdateUserFormProps {
     user: User;
 }
 
-export default function UserProfileForm({ user }: UserProfileFormProps) {
+export default function UpdateUserForm({ user }: UpdateUserFormProps) {
     const {
         register,
         handleSubmit,
@@ -68,7 +68,6 @@ export default function UserProfileForm({ user }: UserProfileFormProps) {
                 type="email"
                 error={errors.email}
             />
-            {/* Remove or keep the password field based on your update logic */}
             {error && <p className="text-red-500">{error}</p>}
             <div className="py-3">
                 <button
@@ -76,7 +75,7 @@ export default function UserProfileForm({ user }: UserProfileFormProps) {
                     className="standard-button w-full"
                     disabled={isSubmitting}
                 >
-                    Update
+                    Update Profile
                 </button>
             </div>
         </form>

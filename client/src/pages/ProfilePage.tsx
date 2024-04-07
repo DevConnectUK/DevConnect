@@ -1,7 +1,7 @@
 import { useUserContext } from "../components/context/UserContext";
 import { Link } from "react-router-dom";
 import DarkModeToggle from "../components/ui/DarkModeToggle";
-import UserProfileForm from "../components/form/UpdateUserForm";
+import UpdateUserForm from "../components/form/UpdateUserForm";
 
 export default function ProfilePage() {
     const [user] = useUserContext();
@@ -17,10 +17,10 @@ export default function ProfilePage() {
     return (
         <div className="max-w-[1000px] mx-auto">
             <h1 className="text-3xl mb-2">Profile</h1>
-            <div className=" flex justify-between gap-44">
+            <div className="flex justify-between gap-44">
                 <div className="flex-[2]">
                     <DarkModeToggle />
-                    <UserProfileForm user={user} />
+                    <UpdateUserForm user={user} />
                 </div>
                 <div className="flex-1">
                     <Link
