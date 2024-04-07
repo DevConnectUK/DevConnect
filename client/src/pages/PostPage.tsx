@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Post } from "../models/post";
 import { getPostById } from "../api/post";
-import PostCard from "../components/post/PostCard";
+import PostCard from "../components/common/post/PostCard";
 
 export default function PostPage() {
     const { id } = useParams<{ id: string }>();

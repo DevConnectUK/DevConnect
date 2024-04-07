@@ -4,7 +4,6 @@ export async function handleRequest<T>(
     request: RequestInfo,
     init?: RequestInit
 ): Promise<T> {
-    console.log(SERVER_URL + request);
     const response = await fetch(SERVER_URL + request, {
         ...init,
         credentials: "include",

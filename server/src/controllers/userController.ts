@@ -156,7 +156,8 @@ export const getUser: RequestHandler = async (req, res, next) => {
 };
 
 export const updateUser: RequestHandler = async (req, res, next) => {
-    const userId = req.params.id;
+    const userId = req.session.userId;
+    console.log(userId);
     try {
         if (!mongoose.isValidObjectId(userId)) {
             throw createHttpError(400, "Invalid user ID");

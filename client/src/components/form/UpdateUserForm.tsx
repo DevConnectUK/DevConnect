@@ -1,26 +1,33 @@
 import { useForm } from "react-hook-form";
 import FormItem from "./FormItem";
-import { RegisterUserInput } from "../../models/user";
-import { registerUser } from "../../api/user";
-import { useUserContext } from "../../context/UserContext";
-import { useState } from "react";
+import { User, UpdateUserInput } from "../../models/user";
+import { updateUser } from "../../api/user";
+import { useUserContext } from "../context/UserContext";
+import { useEffect, useState } from "react";
 
-export default function RegistrationForm() {
+interface UserProfileFormProps {
+    user: User;
+}
+
+export default function UserProfileForm({ user }: UserProfileFormProps) {
     const {
         register,
         handleSubmit,
         reset,
         formState: { errors, isSubmitting },
-    } = useForm<RegisterUserInput>();
+    } = useForm<UpdateUserInput>();
 
     const [, setLoggedInUser] = useUserContext();
     const [error, setError] = useState("");
 
-    async function onSubmit(formData: RegisterUserInput) {
+    useEffect(() => {
+        reset(user);
+    }, [user, reset]);
+
+    async function onSubmit(formData: UpdateUserInput) {
         try {
-            const user = await registerUser(formData);
-            setLoggedInUser(user);
-            reset();
+            const updatedUser = await updateUser(formData);
+            setLoggedInUser(updatedUser);
         } catch (error: any) {
             console.error(error.message);
             setError(error.message);
@@ -61,22 +68,15 @@ export default function RegistrationForm() {
                 type="email"
                 error={errors.email}
             />
-            <FormItem
-                name="password"
-                label="Password"
-                register={register}
-                registerOptions={{ required: "Required" }}
-                type="password"
-                error={errors.password}
-            />
-            {error && <p className="text-red-500">{error}</p>}{" "}
+            {/* Remove or keep the password field based on your update logic */}
+            {error && <p className="text-red-500">{error}</p>}
             <div className="py-3">
                 <button
                     type="submit"
                     className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
                     disabled={isSubmitting}
                 >
-                    Register
+                    Update
                 </button>
             </div>
         </form>

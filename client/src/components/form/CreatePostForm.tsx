@@ -4,7 +4,7 @@ import { createPost } from "../../api/post";
 import FormItem from "./FormItem";
 import { CreatePostInput } from "../../models/post";
 
-export default function PostForm() {
+export default function CreatePostForm() {
     const {
         register,
         handleSubmit,

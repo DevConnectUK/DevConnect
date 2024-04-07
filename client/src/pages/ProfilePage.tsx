@@ -1,29 +1,10 @@
-import { useEffect, useState } from "react";
-import { useUserContext } from "../context/UserContext";
-import { Post } from "../models/post";
-import { getUserPosts } from "../api/post";
-import PostGrid from "../components/post/PostGrid";
+import { useUserContext } from "../components/context/UserContext";
 import { Link } from "react-router-dom";
-import { User } from "../models/user";
 import DarkModeToggle from "../components/ui/DarkModeToggle";
+import UserProfileForm from "../components/form/UpdateUserForm";
 
 export default function ProfilePage() {
     const [user] = useUserContext();
-    const [posts, setPosts] = useState<Post[]>([]);
-
-    useEffect(() => {
-        const fetchUserPosts = async () => {
-            if (!user) return;
-
-            try {
-                const userPosts = await getUserPosts(user._id);
-                setPosts(userPosts);
-            } catch (error) {
-                console.error("Error fetching user posts:", error);
-            }
-        };
-        fetchUserPosts();
-    }, [user]);
 
     if (!user) {
         return (
@@ -34,29 +15,25 @@ export default function ProfilePage() {
     }
 
     return (
-        <div className="max-w-[1000px] mx-auto">
-            <UserProfileCard user={user} />
-            <DarkModeToggle />
-            <Link
-                to="/create-post"
-                className="block bg-accent text-white py-2 px-4 rounded  w-full text-center"
-            >
-                Create Post
-            </Link>
-            <PostGrid posts={posts} />
-        </div>
-    );
-}
-
-interface UserProfileCardProps {
-    user: User;
-}
-
-function UserProfileCard({ user }: UserProfileCardProps) {
-    return (
-        <div>
-            <h1>{user.username}</h1>
-            <p>Email: {user.email}</p>
+        <div className="max-w-[1000px] mx-auto flex justify-between">
+            <div className="flex-1">
+                <DarkModeToggle />
+                <UserProfileForm user={user} />
+            </div>
+            <div className="flex-1">
+                <Link
+                    to="/create-post"
+                    className="block bg-accent py-2 px-4 rounded w-full text-center mb-4"
+                >
+                    Create Post
+                </Link>
+                <Link
+                    to="/posts"
+                    className="block bg-accent py-2 px-4 rounded w-full text-center"
+                >
+                    My Posts
+                </Link>
+            </div>
         </div>
     );
 }

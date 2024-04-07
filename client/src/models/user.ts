@@ -21,3 +21,10 @@ export type LoginUserInput = {
     username: string;
     password: string;
 };
+
+export type UpdateUserInput = {
+    firstName: string;
+    lastName: string;
+    username: string;
+    email: string;
+};

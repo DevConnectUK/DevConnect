@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../api/user";
-import { useUserContext } from "../../context/UserContext";
+import { useUserContext } from "../context/UserContext";
 
 export default function NavBar() {
     const [user] = useUserContext();
     return (
         <nav className="p-4">
-            <div className="container mx-auto flex justify-between bg-background-50">
+            <div className="flex justify-between mx-4">
                 <div>
                     <Link to="/">Home</Link>
                 </div>
@@ -21,7 +21,6 @@ export default function NavBar() {
         </nav>
     );
 }
-
 function LoggedInSection() {
     const [, setLoggedInUser] = useUserContext();
     const navigate = useNavigate();

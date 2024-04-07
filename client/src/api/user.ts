@@ -32,10 +32,9 @@ export async function logoutUser(): Promise<void> {
 }
 
 export async function updateUser(
-    id: string,
     user: Partial<RegisterUserInput>
 ): Promise<User> {
-    return await handleRequest<User>(`/api/users/${id}`, {
+    return await handleRequest<User>("/api/users/", {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
