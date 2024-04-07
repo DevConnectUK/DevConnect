@@ -15,24 +15,24 @@ export default function ProfilePage() {
     }
 
     return (
-        <div className="max-w-[1000px] mx-auto flex justify-between">
-            <div className="flex-1">
-                <DarkModeToggle />
-                <UserProfileForm user={user} />
-            </div>
-            <div className="flex-1">
-                <Link
-                    to="/create-post"
-                    className="block bg-accent py-2 px-4 rounded w-full text-center mb-4"
-                >
-                    Create Post
-                </Link>
-                <Link
-                    to="/posts"
-                    className="block bg-accent py-2 px-4 rounded w-full text-center"
-                >
-                    My Posts
-                </Link>
+        <div className="max-w-[1000px] mx-auto">
+            <h1 className="text-3xl mb-2">Profile</h1>
+            <div className=" flex justify-between gap-44">
+                <div className="flex-[2]">
+                    <DarkModeToggle />
+                    <UserProfileForm user={user} />
+                </div>
+                <div className="flex-1">
+                    <Link
+                        to="/create-post"
+                        className="block standard-button mb-2"
+                    >
+                        Create Post
+                    </Link>
+                    <Link to="/posts" className="block standard-button">
+                        My Posts
+                    </Link>
+                </div>
             </div>
         </div>
     );

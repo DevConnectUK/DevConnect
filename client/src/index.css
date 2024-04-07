@@ -132,3 +132,7 @@ body {
     background-color: var(--background-100);
     color: var(--text-950);
 }
+
+.standard-button {
+    @apply bg-accent-500 py-2 px-4 rounded text-center hover:bg-accent-300;
+}
