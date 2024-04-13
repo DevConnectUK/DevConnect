@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import Comment from "../models/comment"; // Assuming the path to your Comment model
+import Comment from "../models/comment";
 import createHttpError from "http-errors";
 import mongoose from "mongoose";
 

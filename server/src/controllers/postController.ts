@@ -4,7 +4,6 @@ import createHttpError from "http-errors";
 import mongoose from "mongoose";
 
 interface CreatePostRequest {
-    title: string;
     content: string;
 }
 
@@ -14,16 +13,15 @@ export const createPost: RequestHandler<
     CreatePostRequest,
     unknown
 > = async (req, res, next) => {
-    const { title, content } = req.body;
+    const { content } = req.body;
     const author = req.session.userId;
 
     try {
-        if (!title || !content || !author) {
+        if (!content || !author) {
             throw createHttpError(400, "Missing required fields");
         }
 
         const newPost = await Post.create({
-            title,
             content,
             author,
         });

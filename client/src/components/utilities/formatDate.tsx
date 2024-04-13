@@ -10,3 +10,11 @@ export function formatDateTime(dateString: string) {
         hour12: true,
     });
 }
+export function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    return date.toLocaleString("en-UK", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+}

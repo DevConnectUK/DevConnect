@@ -25,11 +25,19 @@ export default function PostPage() {
     }, [id]);
 
     if (!id) {
-        return <p>No post ID provided</p>;
+        return (
+            <div className="max-w-[700px] mx-auto">
+                <p>No post ID provided</p>
+            </div>
+        );
     }
 
     if (!post) {
-        return <p>Loading post...</p>;
+        return (
+            <div className="max-w-[700px] mx-auto">
+                <p>Loading post...</p>
+            </div>
+        );
     }
 
     return (

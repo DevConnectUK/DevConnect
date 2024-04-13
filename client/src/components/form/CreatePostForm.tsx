@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { createPost } from "../../api/post";
 import FormItem from "./FormItem";
 import { CreatePostInput } from "../../models/post";
+import { useNavigate } from "react-router-dom";
 
 export default function CreatePostForm() {
     const {
@@ -13,10 +14,13 @@ export default function CreatePostForm() {
 
     const [error, setError] = useState("");
 
+    const navigate = useNavigate();
+
     async function onSubmit(formData: CreatePostInput) {
         setError("");
         try {
-            await createPost(formData);
+            const post = await createPost(formData);
+            navigate(`/post/${post._id}`);
         } catch (error: any) {
             console.error(error.message);
             setError(error.message);
@@ -29,14 +33,6 @@ export default function CreatePostForm() {
                 onSubmit={handleSubmit(onSubmit)}
                 className="py-4 w-full max-w-md"
             >
-                <FormItem
-                    name="title"
-                    label="Title"
-                    register={register}
-                    registerOptions={{ required: "Title is required" }}
-                    type="text"
-                    error={errors.title}
-                />
                 <FormItem
                     name="content"
                     label="Content"

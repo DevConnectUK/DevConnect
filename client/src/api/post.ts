@@ -2,7 +2,6 @@ import { handleRequest } from "./utilities";
 import { Post } from "../models/post";
 
 interface CreatePostInput {
-    title: string;
     content: string;
 }
 
