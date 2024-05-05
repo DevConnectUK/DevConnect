@@ -6,7 +6,7 @@ export async function createPost(postData: PostInput) {
 }
 
 export async function getUserPosts(userId: string) {
-    return apiClient.get<Post[]>(`/users/${userId}/posts`);
+    return apiClient.get<Post[]>(`/posts/user/${userId}`);
 }
 
 export async function getPostById(postId: string) {

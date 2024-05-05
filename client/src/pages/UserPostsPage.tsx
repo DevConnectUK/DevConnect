@@ -4,6 +4,7 @@ import { getUserPosts } from "@/api/post";
 import PostGrid from "@/components/common/post/PostGrid";
 import { Post } from "@/types/post";
 import { useUserContext } from "@/contexts/UserContext";
+import { AxiosError } from "axios";
 
 export default function UserPostsPage() {
     const [user] = useUserContext();
@@ -13,12 +14,13 @@ export default function UserPostsPage() {
         const fetchUserPosts = async () => {
             if (!user) return;
 
-            try {
-                const userPosts = await getUserPosts(user._id);
-                setPosts(userPosts);
-            } catch (error) {
-                console.error("Error fetching user posts:", error);
-            }
+            getUserPosts(user._id)
+                .then((response) => {
+                    setPosts(response.data);
+                })
+                .catch((error: AxiosError) => {
+                    console.error(error);
+                });
         };
         fetchUserPosts();
     }, [user]);
