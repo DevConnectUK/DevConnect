@@ -1,9 +1,10 @@
+import { z } from "zod";
 import { PostComponent } from "./postComponent";
 
 export type Post = PostComponent;
 
-export type CreatePostInput = {
-    content: string;
-};
+export const postSchema = z.object({
+    content: z.string().min(1, { message: "Content is required" }),
+});
 
-export type UpdatePostInput = CreatePostInput;
+export type PostInput = z.infer<typeof postSchema>;

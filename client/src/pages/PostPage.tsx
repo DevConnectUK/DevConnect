@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 
 import { Post } from "@/types/post";
 import { getPostById } from "@/api/post";
-import UpdatePostForm from "@/components/forms/UpdatePostForm";
+import PostForm from "@/components/forms/PostForm";
+import { AxiosError } from "axios";
 
 export default function PostPage() {
     const { id } = useParams<{ id: string }>();
@@ -11,15 +12,17 @@ export default function PostPage() {
 
     useEffect(() => {
         const fetchPost = async () => {
-            try {
-                if (!id) {
-                    return;
-                }
-                const postData = await getPostById(id);
-                setPost(postData);
-            } catch (error) {
-                console.error("Error fetching post:", error);
+            if (!id) {
+                return;
             }
+
+            getPostById(id)
+                .then((response) => {
+                    setPost(response.data);
+                })
+                .catch((error: AxiosError) => {
+                    console.error(error.message);
+                });
         };
 
         fetchPost();
@@ -43,7 +46,7 @@ export default function PostPage() {
 
     return (
         <div className="max-w-[700px] mx-auto">
-            <UpdatePostForm post={post} />
+            <PostForm defaultValues={post} postId={post._id} />
         </div>
     );
 }

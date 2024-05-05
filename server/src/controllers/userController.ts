@@ -1,8 +1,20 @@
 import { RequestHandler } from "express";
 import userModel from "../models/user";
 import createHttpError from "http-errors";
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import bcrypt from "bcrypt";
+
+function getReturnUser(userId: Types.ObjectId) {
+    // decrypt password
+
+    const password = bcrypt.
+
+    return userModel.findById(userId).select("+email").exec();
+
+
+
+
+}
 
 export const getAuthUser: RequestHandler = async (req, res, next) => {
     try {
@@ -71,7 +83,9 @@ export const registerUser: RequestHandler<
 
         req.session.userId = user._id;
 
-        res.status(201).json(user);
+        const returnUser = await getReturnUser(user._id);
+
+        res.status(201).json(returnUser);
     } catch (error) {
         next(error);
     }
@@ -112,7 +126,9 @@ export const loginUser: RequestHandler<
 
         req.session.userId = user._id;
 
-        res.status(201).json(user);
+        const returnUser = await getReturnUser(user._id);
+
+        res.status(201).json(returnUser);
     } catch (error) {
         next(error);
     }
@@ -149,7 +165,10 @@ export const getUser: RequestHandler = async (req, res, next) => {
         if (!user) {
             throw createHttpError(404, "User not found");
         }
-        res.json(user);
+
+        const returnUser = await getReturnUser(user._id);
+
+        res.json(returnUser);
     } catch (error) {
         next(error);
     }
@@ -167,7 +186,10 @@ export const updateUser: RequestHandler = async (req, res, next) => {
         if (!user) {
             throw createHttpError(404, "User not found");
         }
-        res.json(user);
+
+        const returnUser = await getReturnUser(user._id);
+
+        res.json(returnUser);
     } catch (error) {
         next(error);
     }

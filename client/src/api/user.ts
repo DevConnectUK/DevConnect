@@ -1,50 +1,27 @@
 import { User, RegisterUserInput, LoginUserInput } from "@/types/user";
 import { handleRequest } from "./utilities";
+import { apiClient } from "./apiClient";
 
-export async function getLoggedInUser(): Promise<User> {
-    return await handleRequest<User>("/api/users");
+export async function getLoggedInUser() {
+    return await handleRequest<User>("/users");
 }
 
-export async function registerUser(user: RegisterUserInput): Promise<User> {
-    return await handleRequest<User>("/api/users/register", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-    });
+export async function registerUser(user: RegisterUserInput) {
+    return apiClient.post<User>("/users", user);
 }
 
-export async function loginUser(user: LoginUserInput): Promise<User> {
-    return await handleRequest<User>("/api/users/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-    });
+export async function loginUser(user: LoginUserInput) {
+    return apiClient.post<User>("/users/login", user);
 }
 
-export async function logoutUser(): Promise<void> {
-    return await handleRequest<void>("/api/users/logout", {
-        method: "POST",
-    });
+export async function logoutUser() {
+    return apiClient.post<void>("/users/logout");
 }
 
-export async function updateUser(
-    user: Partial<RegisterUserInput>
-): Promise<User> {
-    return await handleRequest<User>("/api/users/", {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-    });
+export async function updateUser(user: Partial<RegisterUserInput>) {
+    return apiClient.put<User>("/users", user);
 }
 
-export async function deleteUser(id: string): Promise<void> {
-    await handleRequest<void>(`/api/users/${id}`, {
-        method: "DELETE",
-    });
+export async function deleteUser(userId: string) {
+    return apiClient.delete(`/users/${userId}`);
 }

@@ -1,4 +1,4 @@
-import { SERVER_URL } from "../config";
+import { SERVER_URL } from "./config";
 
 export async function handleRequest<T>(
     request: RequestInfo,

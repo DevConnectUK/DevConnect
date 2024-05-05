@@ -4,16 +4,19 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "@/contexts/UserContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
 );
 root.render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <UserProvider>
-                <App />
-            </UserProvider>
-        </BrowserRouter>
-    </React.StrictMode>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <React.StrictMode>
+            <BrowserRouter>
+                <UserProvider>
+                    <App />
+                </UserProvider>
+            </BrowserRouter>
+        </React.StrictMode>
+    </ThemeProvider>
 );

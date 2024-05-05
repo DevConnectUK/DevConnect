@@ -1,62 +1,81 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { loginUser } from "../../api/user";
-import FormItem from "./FormItem";
-import { LoginUserInput } from "../../models/user";
-import { useUserContext } from "../context/UserContext";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { loginUser } from "../../api/user";
+import { LoginUserInput, userLoginSchema } from "@/types/user";
+import { useUserContext } from "@/contexts/UserContext";
+import { AxiosError } from "axios";
 
 export default function LoginForm() {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitting },
-    } = useForm<LoginUserInput>();
+    const form = useForm<LoginUserInput>({
+        resolver: zodResolver(userLoginSchema),
+    });
 
     const [, setLoggedInUser] = useUserContext();
-    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     async function onSubmit(formData: LoginUserInput) {
-        setError("");
-        try {
-            const user = await loginUser(formData);
-            setLoggedInUser(user);
-            navigate("/profile");
-        } catch (error: any) {
-            console.error(error.message);
-            setError(error.message);
-        }
+        loginUser(formData)
+            .then((response) => {
+                setLoggedInUser(response.data);
+                navigate("/profile");
+            })
+            .catch((error: AxiosError) => {
+                console.error(error.message);
+                form.setError("root", {
+                    type: "manual",
+                    message: "Invalid username or password",
+                });
+            });
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="py-4">
-            <FormItem
-                name="username"
-                label="Username"
-                register={register}
-                registerOptions={{ required: "Username is required" }}
-                type="text"
-                error={errors.username}
-            />
-            <FormItem
-                name="password"
-                label="Password"
-                register={register}
-                registerOptions={{ required: "Password is required" }}
-                type="password"
-                error={errors.password}
-            />
-            {error && <p className="text-red-500">{error}</p>}{" "}
-            <div className="py-3">
-                <button
-                    type="submit"
-                    className="standard-button w-full"
-                    disabled={isSubmitting}
-                >
+        <Form {...form}>
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6 py-4"
+            >
+                <FormField
+                    control={form.control}
+                    name="username"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Username</FormLabel>
+                            <FormControl>
+                                <Input {...field} type="text" />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Password</FormLabel>
+                            <FormControl>
+                                <Input {...field} type="password" />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormMessage>{form.formState.errors.root?.message}</FormMessage>
+                <Button type="submit" disabled={form.formState.isSubmitting}>
                     Login
-                </button>
-            </div>
-        </form>
+                </Button>
+            </form>
+        </Form>
     );
 }

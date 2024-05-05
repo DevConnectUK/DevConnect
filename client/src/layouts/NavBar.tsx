@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { logoutUser } from "../../api/user";
-import { useUserContext } from "../context/UserContext";
+import { logoutUser } from "@/api/user";
+import { useUserContext } from "@/contexts/UserContext";
+import { ModeToggle } from "@/components/ThemeToggle";
 
 export default function NavBar() {
     const [user] = useUserContext();
@@ -11,6 +12,7 @@ export default function NavBar() {
                     <Link to="/">Home</Link>
                 </div>
                 <div>
+                    <ModeToggle />
                     {user != null ? (
                         <LoggedInSection />
                     ) : (
