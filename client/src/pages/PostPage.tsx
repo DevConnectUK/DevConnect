@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Post } from "../models/post";
-import { getPostById } from "../api/post";
-import UpdatePostForm from "../components/form/UpdatePostForm";
+
+import { Post } from "@/types/post";
+import { getPostById } from "@/api/post";
+import UpdatePostForm from "@/components/forms/UpdatePostForm";
 
 export default function PostPage() {
     const { id } = useParams<{ id: string }>();

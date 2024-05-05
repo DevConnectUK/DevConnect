@@ -1,9 +1,5 @@
 import { handleRequest } from "./utilities";
-import { Post } from "../models/post";
-
-interface CreatePostInput {
-    content: string;
-}
+import { CreatePostInput, Post, UpdatePostInput } from "#types/post";
 
 export async function createPost(postData: CreatePostInput): Promise<Post> {
     return await handleRequest<Post>("/api/posts", {
@@ -35,7 +31,7 @@ export async function getPostById(postId: string): Promise<Post> {
 
 export async function updatePostById(
     postId: string,
-    postData: Partial<CreatePostInput>
+    postData: UpdatePostInput
 ): Promise<Post> {
     return await handleRequest<Post>(`/api/posts/${postId}`, {
         method: "PUT",

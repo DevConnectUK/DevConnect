@@ -1,4 +1,4 @@
-import { User, RegisterUserInput, LoginUserInput } from "../models/user";
+import { User, RegisterUserInput, LoginUserInput } from "@/types/user";
 import { handleRequest } from "./utilities";
 
 export async function getLoggedInUser(): Promise<User> {

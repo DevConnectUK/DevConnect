@@ -1,7 +1,8 @@
-import { useUserContext } from "../components/context/UserContext";
 import { Link } from "react-router-dom";
-import DarkModeToggle from "../components/ui/DarkModeToggle";
-import UpdateUserForm from "../components/form/UpdateUserForm";
+
+import { useUserContext } from "@/contexts/UserContext";
+import DarkModeToggle from "@/components/ui/DarkModeToggle";
+import UpdateUserForm from "@/components/forms/UpdateUserForm";
 
 export default function ProfilePage() {
     const [user] = useUserContext();

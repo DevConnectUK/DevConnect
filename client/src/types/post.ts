@@ -6,6 +6,4 @@ export type CreatePostInput = {
     content: string;
 };
 
-export type UpdatePostInput = {
-    content: string;
-};
+export type UpdatePostInput = CreatePostInput;

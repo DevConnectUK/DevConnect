@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { createPost } from "../../api/post";
-import FormItem from "./FormItem";
-import { CreatePostInput } from "../../models/post";
 import { useNavigate } from "react-router-dom";
+
+import { createPost } from "@/api/post";
+import FormItem from "@/components/forms/FormItem";
+import { CreatePostInput } from "@/models/post";
 
 export default function CreatePostForm() {
     const {

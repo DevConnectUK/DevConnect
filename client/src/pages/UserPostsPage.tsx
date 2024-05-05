@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { getUserPosts } from "../api/post";
-import PostGrid from "../components/common/post/PostGrid";
-import { Post } from "../models/post";
-import { useUserContext } from "../components/context/UserContext";
+
+import { getUserPosts } from "@/api/post";
+import PostGrid from "@/components/common/post/PostGrid";
+import { Post } from "@/types/post";
+import { useUserContext } from "@/contexts/UserContext";
 
 export default function UserPostsPage() {
     const [user] = useUserContext();

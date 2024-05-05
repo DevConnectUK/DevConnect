@@ -7,7 +7,6 @@ interface FormItemProps {
     name: string;
     type: string;
     error?: FieldError;
-    [x: string]: any;
 }
 
 export default function FormItem({

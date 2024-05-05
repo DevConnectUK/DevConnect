@@ -1,15 +1,17 @@
 import { Route, Routes } from "react-router-dom";
-import NavBar from "./components/layout/NavBar";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import ProfilePage from "./pages/ProfilePage";
-import PostPage from "./pages/PostPage";
 import { useEffect } from "react";
-import { getLoggedInUser } from "./api/user";
-import { useUserContext } from "./components/context/UserContext";
-import CreatePostPage from "./pages/CreatePostPage";
-import HomePage from "./pages/HomePage";
-import UserPostsPage from "./pages/UserPostsPage";
+
+import { getLoggedInUser } from "@/api/user";
+import NavBar from "@/layouts/NavBar";
+import { useUserContext } from "@/contexts/UserContext";
+
+import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
+import ProfilePage from "@/pages/ProfilePage";
+import PostPage from "@/pages/PostPage";
+import CreatePostPage from "@/pages/CreatePostPage";
+import HomePage from "@/pages/HomePage";
+import UserPostsPage from "@/pages/UserPostsPage";
 
 function App() {
     const [, setLoggedInUser] = useUserContext();
